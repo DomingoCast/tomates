@@ -5,10 +5,17 @@ import Timer from '../Timer/Timer'
 
 const MainLayout = (props) => {
     return (
-        <View>
+        <View style={styles.container}>
             <Timer/>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        width: "100%",
+        alignItems: "center",
+    },
+})
 
 export default MainLayout

@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native';
-
+import { StyleSheet, Image, Text, View } from 'react-native';
 import Clock from '../../components/Clock/Clock'
 import Boton from '../../components/Boton/Boton'
+import Centerer from '../../hoc/Centerer/Centerer'
+import Play from '../../../assets/svg/play-button.svg'
+import Stop from '../../../assets/svg/stop.svg'
 //Boton/
 
 const Timer = (props) => {
     const [time, setTime] = useState(0)
     const [timeInter, setTimeInter] = useState(1000)
     const [run, setRun] = useState(false)
-    const [goal, setGoal] = useState(.0001*60*1000)
+    const [goal, setGoal] = useState(66)
     const [interval, setTheInterval] = useState(null)
     const [clockType, setClockType] = useState('timer')
 
     useEffect(() => {
         //setTheTime(time)
-        console.log('[EFFECT]', time, run, goal)
+        //console.log('[EFFECT]', time, run, goal)
         if(time === goal){
             handleClockType()
             setTime(0)
@@ -29,11 +31,12 @@ const Timer = (props) => {
     
     const passTime = () => {
         setTime(time => time + 1)
-        console.log('[PASS]', time)
+        //console.log('[PASS]', time)
     }
 
     const stopClock = () => {
         setRun(false)
+        setTime(0)
         clearInterval(interval)
         console.log('[STOP]', interval)
     }
@@ -45,11 +48,34 @@ const Timer = (props) => {
     return (
         <View>
             <Clock goal={goal} run={run} time={time} type={clockType}/>
-            <Boton click={runClock} text="run"/>
-            <Boton click={stopClock} text="stop"/>
+            <Centerer>
+                <Boton styling={styles.start} click={runClock} text="run">
+                    <Play height={100} width={100} marginTop={-95} marginLeft={-40} />
+                </Boton>
+            </Centerer>
+            <Boton styling={styles.stop} click={stopClock} text="stop">
+                    <Stop height={80} width={80} />
+            </Boton>
         </View>
         
     )
 }
+
+const styles = StyleSheet.create({
+    start: {
+        color: 'white',
+    },
+    playSvg: {
+        width: 100,
+        height: 100,
+    },
+    stopSvg: {
+        width: 80,
+        height: 80,
+    },
+    stop: {
+        backgroundColor: '#A51B02'
+    }
+})
 
 export default Timer
