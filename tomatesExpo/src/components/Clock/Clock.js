@@ -25,14 +25,15 @@ const clock = (props) => {
         const parsed = parseTime()
         //console.log('[PARSED]', parsed)
         return (
-            <View style={styles.time}>
+            <View style={[styles.time, (props.run ? null : styles.stoped)]}>
                 <Text style={styles.text}>{parsed.hours}</Text><Text style={styles.text}>{parsed.minutes}</Text><Text style={[styles.text, styles.seconds]}>{parsed.seconds}</Text>
             </View>
         )
     }
     return (
         <View style={styles.clock}>
-        {styledTime()}
+            {styledTime()}
+            {props.children}
         </View>
 
     )
@@ -66,9 +67,14 @@ const styles = StyleSheet.create({
         //borderRadius:Dimensions.get('window').width * 0.9 / 2,
         borderRadius: 175,
         backgroundColor: '#A51B02',
-        justifyContent: "center"
+        justifyContent: "center",
+        position: 'relative',
+        //borderWidth: 3,
 
-    }
+    },
+    stoped: {
+        opacity: .5
+    },
 })
 
 export default clock

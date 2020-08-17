@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native';
 import Timer from '../Timer/Timer'
 //Timer/
 
 const MainLayout = (props) => {
+    [dScroller, setDS] = useState(false)
+    const scrollIt = () => {
+        setDS(true)
+    }
     return (
         <View style={styles.container}>
-            <Timer/>
+            <Timer scrollIt={scrollIt}/>
+            <Scroller display={displayScroller}/>
         </View>
     )
 }
