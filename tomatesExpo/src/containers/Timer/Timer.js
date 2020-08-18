@@ -10,6 +10,7 @@ import Pause from '../../../assets/svg/pause.svg'
 
 const Timer = (props) => {
     const [time, setTime] = useState(0)
+    const [extra, setExtra] = useState(0)
     const [timeInter, setTimeInter] = useState(1000)
     const [run, setRun] = useState(false)
     const [goal, setGoal] = useState(66)
@@ -32,17 +33,21 @@ const Timer = (props) => {
     
     const passTime = () => {
         setTime(time => time + 1)
+        if( clockType !== "timer" ){
+            setExtra(extra => extra + 1)
+        }
         //console.log('[PASS]', time)
     }
 
     const stopClock = () => {
         if( !run  ){
             props.scrollIt()
+            props.saveData(time, extra)
         } else {
             setRun(false)
             setTime(0)
             clearInterval(interval)
-            console.log('[STOP]', interval)
+            //console.log('[STOP]', interval)
         }
     }
 

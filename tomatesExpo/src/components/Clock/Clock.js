@@ -1,28 +1,12 @@
 import React from 'react'
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
+import parseTime from '../../util/parseTime'
+
 const clock = (props) => {
-    const parseNumber = (n) => {
-        return (("0" + Math.floor(n)).slice(-2))
-    }
-    const parseTime = () => {
-        const time = props.type === 'timer' ? props.goal - props.time : props.time
-        const div = 60*60//*100
-        const hours = time/div
-        const minutes = (hours%1)*60
-        const seconds = (minutes%1)*60
-        console.log('[CLOCK]', hours, minutes, seconds)
-        const miliseconds = seconds%1
-        return ({
-            hours: parseNumber(hours),
-            minutes: parseNumber(minutes),
-            seconds: parseNumber(seconds),
-            miliseconds: miliseconds
-        })
-    }
 
     const styledTime = () => {
-        const parsed = parseTime()
+        const parsed = parseTime(props.type === 'timer' ? props.goal - props.time : props.time)
         //console.log('[PARSED]', parsed)
         return (
             <View style={[styles.time, (props.run ? null : styles.stoped)]}>
@@ -30,6 +14,7 @@ const clock = (props) => {
             </View>
         )
     }
+
     return (
         <View style={styles.clock}>
             {styledTime()}
