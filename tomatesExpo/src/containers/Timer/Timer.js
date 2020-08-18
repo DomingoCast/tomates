@@ -8,19 +8,22 @@ import Play from '../../../assets/svg/play-button.svg'
 import Stop from '../../../assets/svg/stop.svg'
 import Pause from '../../../assets/svg/pause.svg'
 
+import { Audio, Video } from 'expo-av'
+
 const Timer = (props) => {
     const [time, setTime] = useState(0)
     const [extra, setExtra] = useState(0)
     const [timeInter, setTimeInter] = useState(1000)
     const [run, setRun] = useState(false)
-    const [goal, setGoal] = useState(66)
+    const [goal, setGoal] = useState(6)
     const [interval, setTheInterval] = useState(null)
     const [clockType, setClockType] = useState('timer')
 
     useEffect(() => {
         //setTheTime(time)
         //console.log('[EFFECT]', time, run, goal)
-        if(time === goal){
+        if(time === goal && clockType==='timer'){
+            alarm()
             handleClockType()
             setTime(0)
         }
@@ -29,6 +32,24 @@ const Timer = (props) => {
     const runClock = () => {
         setRun(true)
         setTheInterval(setInterval(passTime, timeInter))
+    }
+
+    const alarm = async () => {
+        console.log('[PREPARED?]')
+        const soundObject = new Audio.Sound();
+
+        try {
+          await soundObject.loadAsync(require('../../../assets/sounds/gong.mp3'));
+          await soundObject.playAsync();
+          // Your sound is playing!
+          await console.log('[PLAYING]')
+          // Don't forget to unload the sound from memory
+          // when you are done using the Sound object
+          setTimeout(async () => await soundObject.unloadAsync(), 6000)
+          
+        } catch (error) {
+          // An error occurred!
+        }
     }
     
     const passTime = () => {
