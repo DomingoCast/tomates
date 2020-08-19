@@ -8,7 +8,7 @@ const parseTime = (time) => {
     const hours = time/div
     const minutes = (hours%1)*60
     const seconds = (minutes%1)*60
-    console.log('[CLOCK]', hours, minutes, seconds)
+    //console.log('[CLOCK]', hours, minutes, seconds)
     const miliseconds = seconds%1
     return ({
         hours: parseNumber(hours),

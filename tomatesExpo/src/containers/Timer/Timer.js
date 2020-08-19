@@ -15,13 +15,13 @@ const Timer = (props) => {
     const [extra, setExtra] = useState(0)
     const [timeInter, setTimeInter] = useState(1000)
     const [run, setRun] = useState(false)
-    const [goal, setGoal] = useState(6)
+    const [goal, setGoal] = useState(3)
     const [interval, setTheInterval] = useState(null)
     const [clockType, setClockType] = useState('timer')
 
     useEffect(() => {
         //setTheTime(time)
-        //console.log('[EFFECT]', time, run, goal)
+        console.log('[EFFECT]', time, extra, clockType)
         if(time === goal && clockType==='timer'){
             alarm()
             handleClockType()
@@ -35,14 +35,14 @@ const Timer = (props) => {
     }
 
     const alarm = async () => {
-        console.log('[PREPARED?]')
+        //console.log('[PREPARED?]')
         const soundObject = new Audio.Sound();
 
         try {
           await soundObject.loadAsync(require('../../../assets/sounds/gong.mp3'));
           await soundObject.playAsync();
           // Your sound is playing!
-          await console.log('[PLAYING]')
+          //await console.log('[PLAYING]')
           // Don't forget to unload the sound from memory
           // when you are done using the Sound object
           setTimeout(async () => await soundObject.unloadAsync(), 6000)
@@ -54,20 +54,22 @@ const Timer = (props) => {
     
     const passTime = () => {
         setTime(time => time + 1)
-        if( clockType !== "timer" ){
-            setExtra(extra => extra + 1)
-        }
-        //console.log('[PASS]', time)
     }
 
     const stopClock = () => {
         if( !run  ){
+            console.log('[STOP]', time, extra)
+            clockType==='timer' ? props.saveData(0, time) : props.saveData(1, time)
             props.scrollIt()
-            props.saveData(time, extra)
+            setClockType('timer')
+            setTime(0)
+
+            
         } else {
             setRun(false)
-            setTime(0)
+            //setTime(0)
             clearInterval(interval)
+            
             //console.log('[STOP]', interval)
         }
     }
