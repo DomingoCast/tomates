@@ -7,7 +7,7 @@ const tomatoes = (props) => {
     //console.log('wasap', props.nTomatoes)
     const theTs = []
     _.times(props.nTomatoes, () => {
-        console.log('legoo', props.nTomatoes)
+        //console.log('legoo', props.nTomatoes)
         theTs.push(<View style={styles.tomato}></View>)
     })
     return (
